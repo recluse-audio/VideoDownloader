@@ -1,4 +1,5 @@
 venv/
+OUTPUT/
 __pycache__/
 *.pyc
 *.pyo

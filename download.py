@@ -15,11 +15,14 @@ def _find_ffmpeg() -> str | None:
     )
     matches = glob.glob(pattern)
     if matches:
-        return os.path.dirname(matches[0])
+        bin_dir = os.path.dirname(matches[0])
+        if bin_dir not in os.environ.get("PATH", ""):
+            os.environ["PATH"] = bin_dir + os.pathsep + os.environ.get("PATH", "")
+        return bin_dir
     return None
 
 
-def download(url: str, output_dir: str = ".", quality: str = "best", browser: str | None = None) -> None:
+def download(url: str, output_dir: str = ".", quality: str = "best", browser: str | None = None, time_range: str | None = None) -> None:
     quality_formats = {
         "best": "bestvideo+bestaudio/best",
         "1080p": "bestvideo[height<=1080]+bestaudio/best[height<=1080]",
@@ -42,6 +45,16 @@ def download(url: str, output_dir: str = ".", quality: str = "best", browser: st
 
     if browser:
         ydl_opts["cookiesfrombrowser"] = (browser,)
+
+    if time_range:
+        start_str, end_str = time_range.split("-", 1)
+        def _to_seconds(t: str) -> float:
+            parts = list(map(float, t.split(":")))
+            return sum(p * 60 ** (len(parts) - 1 - i) for i, p in enumerate(parts))
+        ydl_opts["download_ranges"] = yt_dlp.utils.download_range_func(
+            None, [(_to_seconds(start_str), _to_seconds(end_str))]
+        )
+        ydl_opts["force_keyframes_at_cuts"] = True
 
     if quality == "audio":
         ydl_opts["postprocessors"] = [
@@ -77,10 +90,17 @@ def main() -> None:
         metavar="BROWSER",
         help="Pass cookies from browser to bypass bot detection (e.g. chrome, edge, firefox)",
     )
+    parser.add_argument(
+        "-t",
+        "--time",
+        default=None,
+        metavar="START-END",
+        help="Time range to download, e.g. 00:01:00-00:02:30",
+    )
     args = parser.parse_args()
 
     try:
-        download(args.url, args.output, args.quality, args.browser)
+        download(args.url, args.output, args.quality, args.browser, args.time)
     except yt_dlp.utils.DownloadError as e:
         print(f"Error: {e}", file=sys.stderr)
         sys.exit(1)
