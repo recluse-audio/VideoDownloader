@@ -1,0 +1,16 @@
+#+TITLE: README
+#+AUTHOR: Ryan Devens
+#+DATE: 2026-11-21 18:04
+#+OPTIONS: toc:nil num:nil
+#+SUMMARY: Readme for VIDEO_DOWNLOAD project
+
+This project is for streamlining download of videos from youtube and kick
+relies on ~yt-dlp~ library and ~ffmpeg~ . Frequently needs yt-dlp update it seems
+
+* REQUIRES
+- ~python3~ with ~yt_dlp~
+- ~ffmpeg~
+- ~node~
+
+* USAGE
+Important CLI commands in this repo: [[file:CMD.org][CMD.org]]

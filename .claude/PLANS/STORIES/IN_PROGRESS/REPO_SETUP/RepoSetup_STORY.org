@@ -3,9 +3,9 @@
 #+STARTUP: overview logdone
 #+TODO: TODO(t) ACTIVE(a) REVIEW(r) | DONE(d) DROPPED(x)
 
-- [ ] USER PLAN APPROVAL
-- [ ] USER PROTOTYPE APPROVAL
-- [ ] USER MERGE APPROVAL
+- [X] USER PLAN APPROVAL
+- [X] USER PROTOTYPE APPROVAL
+- [X] USER MERGE APPROVAL
 
 * META
   :PROPERTIES:
@@ -20,6 +20,7 @@
   :EPIC:          none
   :EPIC_RESULTS:
   :END:
+  - [[elisp:(let ((default-directory (expand-file-name "~/REPOS/PROJECTS/VIDEO_DOWNLOAD/"))) (magit-show-commit "8f4318d"))][VIDEO_DOWNLOAD 8f4318d]] :: RepoSetup: add RepoSetup_STORY.org plan
 
 * INTENDED_RESULTS
   1. =.claude/CLAUDE.md= names the repo rules and =.claude/PLANS/= has the =rd_plan= layout
@@ -28,6 +29,10 @@
   4. =CMD.org= has 4 blocks that =check_cmd_org.py= accepts
 
 * DESIGN
+  - =README.org= line 16 links =CMD.org=
+  - =.claude/CLAUDE.md= lines 7 and 9 name =CMD.org=
+  - =CMD.org= blocks call =download.py= with =-o OUTPUT=
+  - =rd-status.sh= writes =STATUS.org= from =RepoSetup_STORY.org=
 
 * CHANGES
 ** CLAUDE.md  [[file:~/REPOS/PROJECTS/VIDEO_DOWNLOAD/.claude/CLAUDE.md][VIDEO_DOWNLOAD/.claude/CLAUDE.md]]  :: 1
@@ -93,12 +98,12 @@
   - forbidden :: =download.py= =.theme/= =OUTPUT/= =.gitignore=
 
 * PROTOTYPE
-** TODO PROTO_1 end to end [0/5]
-   - [ ] CLAUDE.md
-   - [ ] STATUS.org
-   - [ ] README.md
-   - [ ] README.org
-   - [ ] CMD.org
+** DONE PROTO_1 end to end [5/5]
+   - [X] CLAUDE.md
+   - [X] STATUS.org
+   - [X] README.md
+   - [X] README.org
+   - [X] CMD.org
 
 * TESTS [0/1]
 ** TODO TEST_1 check_cmd_org.py on CMD.org  :: 4
