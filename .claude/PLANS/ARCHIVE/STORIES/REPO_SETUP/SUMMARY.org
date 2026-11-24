@@ -1,0 +1,26 @@
+#+TITLE: RepoSetup Summary
+#+DATE: 26-11-24
+#+LINK: c elisp:(let ((default-directory (expand-file-name "~/REPOS/PROJECTS/VIDEO_DOWNLOAD/"))) (magit-show-commit "%s"))
+
+* INTENDED_RESULTS
+  1. =.claude/CLAUDE.md= names the repo rules and =.claude/PLANS/= has the =rd_plan= layout :: [[c:8b1ab41]]
+  2. =README.md= is deleted :: [[c:8b1ab41]]
+  3. =README.org= keeps the user text and has REQUIRES and USAGE headings :: [[c:8b1ab41]]
+  4. =CMD.org= has 4 blocks that =check_cmd_org.py= accepts :: [[c:8b1ab41]] [[c:e56c93e]]
+
+* COMMITS
+  | commit      | what                                                    |
+  |-------------+---------------------------------------------------------|
+  | [[c:8f4318d]] | RepoSetup_STORY.org plan                                |
+  | [[c:8b1ab41]] | CLAUDE.md and STATUS.org and README.org and CMD.org     |
+  | [[c:e56c93e]] | TEST_1 set to DONE                                      |
+  | [[c:d5dab05]] | merge approval commit link and STATUS.org refresh       |
+
+* USER_TESTS [1/1]
+  #+begin_src sh :results output
+    rd_cmd ~/REPOS/PROJECTS/VIDEO_DOWNLOAD
+  #+end_src
+
+  #+RESULTS:
+
+  - [X] DOWNLOAD block ran from =rd_cmd=

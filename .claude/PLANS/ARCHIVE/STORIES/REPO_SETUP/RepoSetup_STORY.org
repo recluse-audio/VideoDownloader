@@ -14,7 +14,7 @@
   :BRANCH:        RepoSetup_26-11-24
   :BASE_REV:      070dd49
   :REPO:          ~/REPOS/PROJECTS/VIDEO_DOWNLOAD
-  :STATE:         IN_PROGRESS
+  :STATE: DONE
   :HAND_EDITS:    off
   :MODE:          full
   :EPIC:          none
