@@ -11,18 +11,18 @@
   :EPIC:    none
   :UPDATED: 2026-11-24
   :END:
-  - story :: [[file:~/REPOS/PROJECTS/VIDEO_DOWNLOAD/.claude/PLANS/STORIES/IN_PROGRESS/REPO_SETUP/RepoSetup_STORY.org::109][RepoSetup_STORY.org:109]]
+  - story :: [[file:~/REPOS/PROJECTS/VIDEO_DOWNLOAD/.claude/PLANS/STORIES/IN_PROGRESS/REPO_SETUP/RepoSetup_STORY.org][RepoSetup_STORY.org]]
 
 * CURRENT_STEP
-  - step      :: TODO TEST_1 check_cmd_org.py on CMD.org  :: 4
-  - increment :: [[file:~/REPOS/PROJECTS/VIDEO_DOWNLOAD/.claude/PLANS/STORIES/IN_PROGRESS/REPO_SETUP/RepoSetup_STORY.org::111][a block with =#+PLAIN:= removed and check shown failing]]
-  - at        :: [[file:.claude/PLANS/STORIES/IN_PROGRESS/REPO_SETUP/RepoSetup_STORY.org::7][RepoSetup_STORY.org:7]]
+  - step      :: no open step
+  - increment :: no unchecked item
+  - at        :: [[file:.claude/PLANS/STORIES/IN_PROGRESS/REPO_SETUP/RepoSetup_STORY.org::8][RepoSetup_STORY.org:8]]
 
 * FULL_PLAN_STEPS
 | state | step                                                                                                                                                     | results |
 |-------+----------------------------------------------------------------------------------------------------------------------------------------------------------+---------|
 |  DONE | [[file:~/REPOS/PROJECTS/VIDEO_DOWNLOAD/.claude/PLANS/STORIES/IN_PROGRESS/REPO_SETUP/RepoSetup_STORY.org::101][PROTO_1 end to end (5/5)]]                 |         |
-| >TODO | [[file:~/REPOS/PROJECTS/VIDEO_DOWNLOAD/.claude/PLANS/STORIES/IN_PROGRESS/REPO_SETUP/RepoSetup_STORY.org::109][TEST_1 check_cmd_org.py on CMD.org  :: 4]] |         |
+|  DONE | [[file:~/REPOS/PROJECTS/VIDEO_DOWNLOAD/.claude/PLANS/STORIES/IN_PROGRESS/REPO_SETUP/RepoSetup_STORY.org::111][TEST_1 check_cmd_org.py on CMD.org  :: 4]] |         |
 
 * STORIES
 | state       | story                                                                                                                 | epic |

@@ -107,6 +107,7 @@
    - [[elisp:(let ((default-directory (expand-file-name "~/REPOS/PROJECTS/VIDEO_DOWNLOAD/"))) (magit-show-commit "8b1ab41"))][VIDEO_DOWNLOAD 8b1ab41]] :: RepoSetup: add repo rules and CMD.org and README.org sections
 
 * TESTS [1/1]
+  - [[elisp:(let ((default-directory (expand-file-name "~/REPOS/PROJECTS/VIDEO_DOWNLOAD/"))) (magit-show-commit "e56c93e"))][VIDEO_DOWNLOAD e56c93e]] :: RepoSetup: mark TEST_1 DONE for check_cmd_org.py
 ** DONE TEST_1 check_cmd_org.py on CMD.org  :: 4
    - test file :: [[file:~/.claude/skills/rd_cmd/check_cmd_org.py][rd_cmd/check_cmd_org.py]]
    - [X] a block with =#+PLAIN:= removed and check shown failing
