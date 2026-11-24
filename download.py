@@ -22,7 +22,8 @@ def _find_ffmpeg() -> str | None:
     return None
 
 
-def download(url: str, output_dir: str = ".", quality: str = "best", browser: str | None = None, time_range: str | None = None) -> None:
+def download(url: str, output_dir: str = ".", quality: str = "best", browser: str | None = None, time_range: str | None = None,
+             subs: bool = False) -> None:
     quality_formats = {
         "best": "bestvideo+bestaudio/best",
         "1080p": "bestvideo[height<=1080]+bestaudio/best[height<=1080]",
@@ -31,9 +32,16 @@ def download(url: str, output_dir: str = ".", quality: str = "best", browser: st
         "audio": "bestaudio/best",
     }
 
+    if subs:
+        kind_dir = "SUBTITLE"
+    elif quality == "audio":
+        kind_dir = "AUDIO"
+    else:
+        kind_dir = "VIDEO"
+
     ydl_opts = {
         "format": quality_formats.get(quality, quality_formats["best"]),
-        "outtmpl": f"{output_dir}/%(title)s.%(ext)s",
+        "outtmpl": f"{output_dir}/{kind_dir}/%(title)s.%(ext)s",
         "merge_output_format": "mp4",
         "js_runtimes": {"node": {}},
         "remote_components": ["ejs:github"],
@@ -62,6 +70,19 @@ def download(url: str, output_dir: str = ".", quality: str = "best", browser: st
                 "key": "FFmpegExtractAudio",
                 "preferredcodec": "mp3",
                 "preferredquality": "192",
+            }
+        ]
+
+    if subs:
+        ydl_opts["skip_download"] = True
+        ydl_opts["writesubtitles"] = True
+        ydl_opts["writeautomaticsub"] = True
+        ydl_opts["subtitleslangs"] = ["en"]
+        ydl_opts["postprocessors"] = [
+            {
+                "key": "FFmpegSubtitlesConvertor",
+                "format": "srt",
+                "when": "before_dl",
             }
         ]
 
@@ -97,10 +118,16 @@ def main() -> None:
         metavar="START-END",
         help="Time range to download, e.g. 00:01:00-00:02:30",
     )
+    parser.add_argument(
+        "-s",
+        "--subs",
+        action="store_true",
+        help="Download English captions as an .srt file and skip the video",
+    )
     args = parser.parse_args()
 
     try:
-        download(args.url, args.output, args.quality, args.browser, args.time)
+        download(args.url, args.output, args.quality, args.browser, args.time, args.subs)
     except yt_dlp.utils.DownloadError as e:
         print(f"Error: {e}", file=sys.stderr)
         sys.exit(1)

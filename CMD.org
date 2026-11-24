@@ -6,13 +6,13 @@
 
 - Each block runs from the repo root
 - Each download block asks for the URL at its prompt
-- Files land in OUTPUT/
+- Files land in OUTPUT/VIDEO/ and OUTPUT/AUDIO/ and OUTPUT/SUBTITLE/
 
 * DOWNLOAD
 #+DESC: download.py with -o OUTPUT at the default best quality
 #+PLAIN: Saves one video as an mp4 file.
-#+OUTPUT: OUTPUT/<title>.mp4
-#+NEXT: open the file in OUTPUT/
+#+OUTPUT: OUTPUT/VIDEO/<title>.mp4
+#+NEXT: open the file in OUTPUT/VIDEO/
 #+NAME: download
 #+KIND: manual
 #+BEGIN_SRC sh :session cmd :results silent
@@ -23,8 +23,8 @@ python3 download.py "$URL" -o OUTPUT
 * DOWNLOAD_AUDIO
 #+DESC: download.py with -q audio and -o OUTPUT
 #+PLAIN: Saves only the sound of one video as an mp3 file.
-#+OUTPUT: OUTPUT/<title>.mp3
-#+NEXT: open the file in OUTPUT/
+#+OUTPUT: OUTPUT/AUDIO/<title>.mp3
+#+NEXT: open the file in OUTPUT/AUDIO/
 #+NAME: download_audio
 #+KIND: manual
 #+BEGIN_SRC sh :session cmd :results silent
@@ -35,8 +35,8 @@ python3 download.py "$URL" -q audio -o OUTPUT
 * DOWNLOAD_RANGE
 #+DESC: download.py with -t START-END and -o OUTPUT
 #+PLAIN: Saves one part of a video between two times.
-#+OUTPUT: OUTPUT/<title>.mp4
-#+NEXT: open the file in OUTPUT/
+#+OUTPUT: OUTPUT/VIDEO/<title>.mp4
+#+NEXT: open the file in OUTPUT/VIDEO/
 #+BEFORE: know the start and end time such as 00:01:00-00:02:30
 #+NAME: download_range
 #+KIND: manual
@@ -44,6 +44,18 @@ python3 download.py "$URL" -q audio -o OUTPUT
 read -r -p "URL: " URL
 read -r -p "START-END: " RANGE
 python3 download.py "$URL" -t "$RANGE" -o OUTPUT
+#+END_SRC
+
+* DOWNLOAD_SUBS
+#+DESC: download.py with -s and -o OUTPUT
+#+PLAIN: Saves the English captions of one video as an srt file.
+#+OUTPUT: OUTPUT/SUBTITLE/<title>.en.srt
+#+NEXT: open the file in OUTPUT/SUBTITLE/
+#+NAME: download_subs
+#+KIND: manual
+#+BEGIN_SRC sh :session cmd :results silent
+read -r -p "URL: " URL
+python3 download.py "$URL" -s -o OUTPUT
 #+END_SRC
 
 * UPDATE_YT_DLP
