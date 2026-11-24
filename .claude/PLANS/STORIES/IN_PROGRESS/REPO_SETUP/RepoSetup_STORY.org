@@ -1,0 +1,109 @@
+#+TITLE: RepoSetup
+#+DATE: 26-11-24
+#+STARTUP: overview logdone
+#+TODO: TODO(t) ACTIVE(a) REVIEW(r) | DONE(d) DROPPED(x)
+
+- [ ] USER PLAN APPROVAL
+- [ ] USER PROTOTYPE APPROVAL
+- [ ] USER MERGE APPROVAL
+
+* META
+  :PROPERTIES:
+  :STORY_NAME:    RepoSetup
+  :STORY_DIR:     REPO_SETUP
+  :BRANCH:        RepoSetup_26-11-24
+  :BASE_REV:      070dd49
+  :REPO:          ~/REPOS/PROJECTS/VIDEO_DOWNLOAD
+  :STATE:         IN_PROGRESS
+  :HAND_EDITS:    off
+  :MODE:          full
+  :EPIC:          none
+  :EPIC_RESULTS:
+  :END:
+
+* INTENDED_RESULTS
+  1. =.claude/CLAUDE.md= names the repo rules and =.claude/PLANS/= has the =rd_plan= layout
+  2. =README.md= is deleted
+  3. =README.org= keeps the user text and has REQUIRES and USAGE headings
+  4. =CMD.org= has 4 blocks that =check_cmd_org.py= accepts
+
+* DESIGN
+
+* CHANGES
+** CLAUDE.md  [[file:~/REPOS/PROJECTS/VIDEO_DOWNLOAD/.claude/CLAUDE.md][VIDEO_DOWNLOAD/.claude/CLAUDE.md]]  :: 1
+#+begin_src diff
+--- /dev/null
++++ b/.claude/CLAUDE.md
+@@ added @@
++# VIDEO_DOWNLOAD project rules
++...
+#+end_src
+
+** STATUS.org  [[file:~/REPOS/PROJECTS/VIDEO_DOWNLOAD/.claude/PLANS/STATUS.org][VIDEO_DOWNLOAD/.claude/PLANS/STATUS.org]]  :: 1
+#+begin_src diff
+--- /dev/null
++++ b/.claude/PLANS/STATUS.org
+@@ added by rd-status.sh @@
++...
+#+end_src
+
+** README.md  [[file:~/REPOS/PROJECTS/VIDEO_DOWNLOAD/README.md][VIDEO_DOWNLOAD/README.md]]  :: 2
+#+begin_src diff
+--- a/README.md
++++ /dev/null
+@@ removed @@
+-### Download a youtube video to a video file ###
+-...
+#+end_src
+
+** README.org  [[file:~/REPOS/PROJECTS/VIDEO_DOWNLOAD/README.org][VIDEO_DOWNLOAD/README.org]]  :: 3
+#+begin_src diff
+--- a/README.org
++++ b/README.org
+@@ user text @@
+ relies on ~yt-dlp~ library and ~ffmpeg~ . Frequently needs yt-dlp update it seems
++
++* REQUIRES
++- ~python3~ with ~yt_dlp~
++- ~ffmpeg~
++- ~node~
++
++* USAGE
++Important CLI commands in this repo: [[file:CMD.org][CMD.org]]
+#+end_src
+
+** CMD.org  [[file:~/REPOS/PROJECTS/VIDEO_DOWNLOAD/CMD.org][VIDEO_DOWNLOAD/CMD.org]]  :: 4
+#+begin_src diff
+--- /dev/null
++++ b/CMD.org
+@@ added @@
++* DOWNLOAD
++...
++* DOWNLOAD_AUDIO
++...
++* DOWNLOAD_RANGE
++...
++* UPDATE_YT_DLP
++...
+#+end_src
+
+* SCOPE
+  - read :: =VIDEO_DOWNLOAD/=
+  - write :: =.claude/CLAUDE.md= =.claude/PLANS/= =README.md= =README.org= =CMD.org=
+  - forbidden :: =download.py= =.theme/= =OUTPUT/= =.gitignore=
+
+* PROTOTYPE
+** TODO PROTO_1 end to end [0/5]
+   - [ ] CLAUDE.md
+   - [ ] STATUS.org
+   - [ ] README.md
+   - [ ] README.org
+   - [ ] CMD.org
+
+* TESTS [0/1]
+** TODO TEST_1 check_cmd_org.py on CMD.org  :: 4
+   - test file :: [[file:~/.claude/skills/rd_cmd/check_cmd_org.py][rd_cmd/check_cmd_org.py]]
+   - [ ] a block with =#+PLAIN:= removed and check shown failing
+   - [ ] =#+PLAIN:= restored and check shown passing
+
+* REVISIONS
