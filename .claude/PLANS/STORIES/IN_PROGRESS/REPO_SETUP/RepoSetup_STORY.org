@@ -104,11 +104,12 @@
    - [X] README.md
    - [X] README.org
    - [X] CMD.org
+   - [[elisp:(let ((default-directory (expand-file-name "~/REPOS/PROJECTS/VIDEO_DOWNLOAD/"))) (magit-show-commit "8b1ab41"))][VIDEO_DOWNLOAD 8b1ab41]] :: RepoSetup: add repo rules and CMD.org and README.org sections
 
-* TESTS [0/1]
-** TODO TEST_1 check_cmd_org.py on CMD.org  :: 4
+* TESTS [1/1]
+** DONE TEST_1 check_cmd_org.py on CMD.org  :: 4
    - test file :: [[file:~/.claude/skills/rd_cmd/check_cmd_org.py][rd_cmd/check_cmd_org.py]]
-   - [ ] a block with =#+PLAIN:= removed and check shown failing
-   - [ ] =#+PLAIN:= restored and check shown passing
+   - [X] a block with =#+PLAIN:= removed and check shown failing
+   - [X] =#+PLAIN:= restored and check shown passing
 
 * REVISIONS
