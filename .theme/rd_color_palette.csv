@@ -1,0 +1,68 @@
+# blue_dolphin_bluer_palette.csv — Blue Dolphin variant: more blue, brighter
+# comments, less grey. Accent/syntax colors are still the real Blue Dolphin ANSI
+# values; the neutral ramp (bg, modeline, borders, line numbers) is re-tinted blue.
+# --- the text itself ---
+default-BG,#272C42
+default-FG,#C8D0EE
+# --- org source/code blocks (subtle lift over default-BG) ---
+org-block-BG,#303654
+org-verbatim-FG,#F4D69F
+org-code-FG,#F4D69F
+# --- syntax highlighting ---
+font-lock-keyword-face-FG,#E9C1FF
+font-lock-string-face-FG,#B4E88D
+font-lock-comment-face-FG,#7E88C4
+font-lock-function-name-face-FG,#82AAFF
+font-lock-variable-name-face-FG,#FF8288
+font-lock-type-face-FG,#F4D69F
+font-lock-constant-face-FG,#FFE585
+font-lock-builtin-face-FG,#89EBFF
+font-lock-doc-face-FG,#7E88C4
+font-lock-warning-face-FG,#FF8B92
+font-lock-preprocessor-face-FG,#9CC4FF
+font-lock-negation-char-face-FG,#FF8288
+# --- the cursor (now accent blue) ---
+cursor-BG,#82AAFF
+# --- selection and search highlights ---
+region-BG,#3A4680
+highlight-BG,#363E68
+secondary-selection-BG,#363E68
+isearch-BG,#F4D69F
+isearch-FG,#272C42
+lazy-highlight-BG,#363E68
+lazy-highlight-FG,#C8D0EE
+match-BG,#363E68
+show-paren-match-BG,#89EBFF
+show-paren-match-FG,#272C42
+# --- the modeline ---
+mode-line-BG,#363E68
+mode-line-FG,#C8D0EE
+mode-line-inactive-BG,#272C42
+mode-line-inactive-FG,#5C669E
+header-line-BG,#272C42
+header-line-FG,#5C669E
+# --- the margins ---
+fringe-BG,#272C42
+line-number-FG,#4E578C
+line-number-current-line-FG,#C8D0EE
+vertical-border-FG,#363E68
+# --- messages and prompts ---
+minibuffer-prompt-FG,#89EBFF
+link-FG,#82AAFF
+error-FG,#FF8288
+warning-FG,#F4D69F
+success-FG,#B4E88D
+trailing-whitespace-BG,#FF8288
+# --- SPC p f completion UI (Vertico + Orderless + Marginalia) ---
+# the highlighted / selected candidate row — this is the "background" you mean
+vertico-current-BG,#434C5E
+# matched characters inside each candidate (Orderless colours them in groups)
+orderless-match-face-0-FG,#88C0D0
+orderless-match-face-1-FG,#B48EAD
+orderless-match-face-2-FG,#A3BE8C
+orderless-match-face-3-FG,#EBCB8B
+# right-hand annotations (file size, date, etc.)
+marginalia-file-name-FG,#616E88
+marginalia-size-FG,#81A1C1
+marginalia-date-FG,#8FBCBB
+marginalia-documentation-FG,#616E88
