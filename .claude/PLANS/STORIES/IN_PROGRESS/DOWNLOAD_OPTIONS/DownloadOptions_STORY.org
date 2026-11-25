@@ -1,0 +1,185 @@
+#+TITLE: DownloadOptions
+#+DATE: 26-11-24
+#+STARTUP: overview logdone
+#+TODO: TODO(t) ACTIVE(a) REVIEW(r) | DONE(d) DROPPED(x)
+
+- [ ] USER PLAN APPROVAL
+- [ ] USER PROTOTYPE APPROVAL
+- [ ] USER MERGE APPROVAL
+
+* META
+  :PROPERTIES:
+  :STORY_NAME:    DownloadOptions
+  :STORY_DIR:     DOWNLOAD_OPTIONS
+  :BRANCH:        DownloadOptions_26-11-24
+  :BASE_REV:      e8e94da
+  :REPO:          ~/REPOS/PROJECTS/VIDEO_DOWNLOAD
+  :STATE:         IN_PROGRESS
+  :HAND_EDITS:    off
+  :MODE:          full
+  :EPIC:          none
+  :EPIC_RESULTS:
+  :END:
+
+* INTENDED_RESULTS
+  1. =download.py= takes =--kind video|audio|subtitle= in place of =-q audio= and =-s=
+  2. =download.py= takes =--quality best|1080p|720p|480p= for video
+  3. =download.py= takes =--lang= for the subtitle language
+  4. =download.py= with no URL argument asks for each option through =input()=
+  5. =CMD.org= blocks call the new flags
+
+* DESIGN
+
+* CHANGES
+** download.py  [[file:~/REPOS/PROJECTS/VIDEO_DOWNLOAD/download.py][VIDEO_DOWNLOAD/download.py]]  :: 1 2 3 4
+#+begin_src diff
+--- a/download.py
++++ b/download.py
+@@ download @@
+-def download(url: str, output_dir: str = ".", quality: str = "best", browser: str | None = None, time_range: str | None = None,
+-             subs: bool = False) -> None:
++def download(url: str, output_dir: str, kind: str, quality: str, browser: str | None, time_range: str | None,
++             lang: str) -> None:
+-        "audio": "bestaudio/best",
+-    if subs:
++    if kind == "subtitle":
+-    elif quality == "audio":
++    elif kind == "audio":
+-    if quality == "audio":
++    if kind == "audio":
+-    if subs:
++    if kind == "subtitle":
+-        ydl_opts["subtitleslangs"] = ["en"]
++        ydl_opts["subtitleslangs"] = [lang]
+@@ parse_arguments @@
++def parse_arguments() -> argparse.Namespace:
++    ...
+@@ prompt_choice @@
++def prompt_choice(label: str, choices: list[str], default: str) -> str:
++    ...
+@@ prompt_options @@
++def prompt_options(args: argparse.Namespace) -> argparse.Namespace:
++    ...
+@@ main @@
+ def main() -> None:
+-    parser = argparse.ArgumentParser(description="Download a YouTube video.")
+-    ...
+-    args = parser.parse_args()
++    args = parse_arguments()
++    if args.url is None:
++        args = prompt_options(args)
+-        download(args.url, args.output, args.quality, args.browser, args.time, args.subs)
++        download(args.url, args.output, args.kind, args.quality, args.browser, args.time, args.lang)
+#+end_src
+
+** CMD.org  [[file:~/REPOS/PROJECTS/VIDEO_DOWNLOAD/CMD.org][VIDEO_DOWNLOAD/CMD.org]]  :: 5
+#+begin_src diff
+--- a/CMD.org
++++ b/CMD.org
+@@ DOWNLOAD_AUDIO @@
+-#+DESC: download.py with -q audio and -o OUTPUT
++#+DESC: download.py with --kind audio and -o OUTPUT
+-python3 download.py "$URL" -q audio -o OUTPUT
++python3 download.py "$URL" --kind audio -o OUTPUT
+@@ DOWNLOAD_SUBS @@
+-#+DESC: download.py with -s and -o OUTPUT
++#+DESC: download.py with --kind subtitle and -o OUTPUT
+-python3 download.py "$URL" -s -o OUTPUT
++python3 download.py "$URL" --kind subtitle -o OUTPUT
+@@ DOWNLOAD_PROMPT @@
++* DOWNLOAD_PROMPT
++#+DESC: download.py with no URL argument
++...
++python3 download.py
+#+end_src
+
+* SCOPE
+  - read :: =VIDEO_DOWNLOAD/=
+  - write :: =download.py= =CMD.org= =tests/= =.claude/PLANS/=
+  - forbidden :: =.theme/= =OUTPUT/= =.gitignore= =README.org=
+
+* PROTOTYPE
+** TODO PROTO_1 end to end [0/2]
+   - [ ] download.py
+   - [ ] CMD.org
+
+* TESTS [0/6]
+** TODO TEST_1 download()  :: 1 2 3
+   - test file :: [[file:~/REPOS/PROJECTS/VIDEO_DOWNLOAD/tests/test_download.py][VIDEO_DOWNLOAD/tests/test_download.py]]
+#+begin_src diff
+--- /dev/null
++++ b/tests/test_download.py
+@@ TestDownload @@
++class TestDownload(unittest.TestCase):
++    def test_audio_kind_adds_mp3_postprocessor(self) -> None:
++        ...
++    def test_subtitle_kind_uses_lang(self) -> None:
++        ...
++    def test_video_quality_selects_height(self) -> None:
++        ...
+#+end_src
+   - [ ] body commented out and test shown failing
+   - [ ] body restored and test shown passing
+
+** TODO TEST_2 parse_arguments()  :: 1 2 3 4
+   - test file :: [[file:~/REPOS/PROJECTS/VIDEO_DOWNLOAD/tests/test_download.py][VIDEO_DOWNLOAD/tests/test_download.py]]
+#+begin_src diff
+--- a/tests/test_download.py
++++ b/tests/test_download.py
+@@ TestParseArguments @@
++class TestParseArguments(unittest.TestCase):
++    def test_flags_set_kind_quality_lang(self) -> None:
++        ...
++    def test_missing_url_is_none(self) -> None:
++        ...
+#+end_src
+   - [ ] body commented out and test shown failing
+   - [ ] body restored and test shown passing
+
+** TODO TEST_3 prompt_choice()  :: 4
+   - test file :: [[file:~/REPOS/PROJECTS/VIDEO_DOWNLOAD/tests/test_download.py][VIDEO_DOWNLOAD/tests/test_download.py]]
+#+begin_src diff
+--- a/tests/test_download.py
++++ b/tests/test_download.py
+@@ TestPromptChoice @@
++class TestPromptChoice(unittest.TestCase):
++    def test_empty_answer_returns_default(self) -> None:
++        ...
++    def test_invalid_answer_asks_again(self) -> None:
++        ...
+#+end_src
+   - [ ] body commented out and test shown failing
+   - [ ] body restored and test shown passing
+
+** TODO TEST_4 prompt_options()  :: 4
+   - test file :: [[file:~/REPOS/PROJECTS/VIDEO_DOWNLOAD/tests/test_download.py][VIDEO_DOWNLOAD/tests/test_download.py]]
+#+begin_src diff
+--- a/tests/test_download.py
++++ b/tests/test_download.py
+@@ TestPromptOptions @@
++class TestPromptOptions(unittest.TestCase):
++    def test_answers_fill_every_option(self) -> None:
++        ...
+#+end_src
+   - [ ] body commented out and test shown failing
+   - [ ] body restored and test shown passing
+
+** TODO TEST_5 main()  :: 4
+   - test file :: [[file:~/REPOS/PROJECTS/VIDEO_DOWNLOAD/tests/test_download.py][VIDEO_DOWNLOAD/tests/test_download.py]]
+#+begin_src diff
+--- a/tests/test_download.py
++++ b/tests/test_download.py
+@@ TestMain @@
++class TestMain(unittest.TestCase):
++    def test_missing_url_calls_prompt_options(self) -> None:
++        ...
+#+end_src
+   - [ ] body commented out and test shown failing
+   - [ ] body restored and test shown passing
+
+** TODO TEST_6 check_cmd_org.py on CMD.org  :: 5
+   - test file :: [[file:~/.claude/skills/rd_cmd/check_cmd_org.py][rd_cmd/check_cmd_org.py]]
+   - [ ] a block with =#+PLAIN:= removed and check shown failing
+   - [ ] =#+PLAIN:= restored and check shown passing
+
+* REVISIONS
