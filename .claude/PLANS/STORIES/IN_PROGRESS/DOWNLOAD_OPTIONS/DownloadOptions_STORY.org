@@ -1,0 +1,272 @@
+#+TITLE: DownloadOptions
+#+DATE: 26-11-24
+#+STARTUP: overview logdone
+#+TODO: TODO(t) ACTIVE(a) REVIEW(r) | DONE(d) DROPPED(x)
+
+- [X] USER PLAN APPROVAL
+- [X] USER PROTOTYPE APPROVAL
+- [ ] USER MERGE APPROVAL
+
+* META
+  :PROPERTIES:
+  :STORY_NAME:    DownloadOptions
+  :STORY_DIR:     DOWNLOAD_OPTIONS
+  :BRANCH:        DownloadOptions_26-11-24
+  :BASE_REV:      e8e94da
+  :REPO:          ~/REPOS/PROJECTS/VIDEO_DOWNLOAD
+  :STATE:         IN_PROGRESS
+  :HAND_EDITS:    off
+  :MODE:          full
+  :EPIC:          none
+  :EPIC_RESULTS:
+  :END:
+  - [[elisp:(let ((default-directory (expand-file-name "~/REPOS/PROJECTS/VIDEO_DOWNLOAD/"))) (magit-show-commit "733963d"))][VIDEO_DOWNLOAD 733963d]] :: DownloadOptions: add DownloadOptions_STORY.org plan
+
+* INTENDED_RESULTS
+  1. =download.py= takes =--kind= with one or more of =video audio subtitle= in place of =-q audio= and =-s=
+  2. =download.py= takes =--quality best|1080p|720p|480p= for video
+  3. =download.py= takes =--lang= for the subtitle language
+  4. =download.py= with no URL argument asks yes or no for video and audio and subtitles then asks each option
+  5. =CMD.org= has one download block that runs the prompts
+
+* DESIGN
+  - =CMD.org= =Download with options= runs =download.py= =main()= with no URL
+  - =main()= calls =parse_arguments()= then =prompt_options()= when =args.url= is =None=
+  - =prompt_options()= calls =prompt_yes_no()= for video and audio and subtitles
+  - =prompt_options()= calls =prompt_choice()= for quality and browser
+  - =main()= calls =download()= once per entry of =args.kinds=
+  - =main()= skips the audio =download()= when video and audio are both chosen
+  - =main()= calls =extract_audio()= with the mp4 path that =download()= returns
+  - =KINDS= and =QUALITIES= and =BROWSERS= are read by =parse_arguments()= and =prompt_options()=
+
+* CHANGES
+** download.py  [[file:~/REPOS/PROJECTS/VIDEO_DOWNLOAD/download.py][VIDEO_DOWNLOAD/download.py]]  :: 1 2 3 4
+#+begin_src diff
+--- a/download.py
++++ b/download.py
+@@ imports @@
++KINDS = ["video", "audio", "subtitle"]
++QUALITIES = ["best", "1080p", "720p", "480p"]
++BROWSERS = ["chrome", "edge", "firefox", "brave", "opera", "chromium"]
+@@ download @@
+-def download(url: str, output_dir: str = ".", quality: str = "best", browser: str | None = None, time_range: str | None = None,
+-             subs: bool = False) -> None:
++def download(url: str, output_dir: str, kind: str, quality: str, browser: str | None, time_range: str | None,
++             lang: str) -> str | None:
+-        "audio": "bestaudio/best",
+-    if subs:
++    if kind == "subtitle":
+-    elif quality == "audio":
++    elif kind == "audio":
++    if kind == "audio":
++        format_selector = "bestaudio/best"
++    else:
++        format_selector = quality_formats[quality]
+-        "format": quality_formats.get(quality, quality_formats["best"]),
++        "format": format_selector,
+-    if quality == "audio":
++    if kind == "audio":
+-    if subs:
++    if kind == "subtitle":
+-        ydl_opts["subtitleslangs"] = ["en"]
++        ydl_opts["subtitleslangs"] = [lang]
+-        ydl.download([url])
++        info = ydl.extract_info(url, download=True)
++    downloads = info.get("requested_downloads", [])
++    if len(downloads) == 0:
++        return None
++    return downloads[0]["filepath"]
+@@ extract_audio @@
++def extract_audio(video_path: str, output_dir: str) -> None:
++    ...
+@@ parse_arguments @@
++def parse_arguments() -> argparse.Namespace:
++    ...
+@@ prompt_choice @@
++def prompt_choice(label: str, choices: list[str], default: str) -> str:
++    ...
+@@ prompt_yes_no @@
++def prompt_yes_no(question: str, default: bool) -> bool:
++    ...
+@@ prompt_options @@
++def prompt_options(args: argparse.Namespace) -> argparse.Namespace:
++    ...
+@@ main @@
+ def main() -> None:
+-    parser = argparse.ArgumentParser(description="Download a YouTube video.")
+-    ...
+-    args = parser.parse_args()
++    args = parse_arguments()
++    if args.url is None:
++        args = prompt_options(args)
++    if len(args.kinds) == 0:
++        print("Nothing chosen to download.")
++        return
+-        download(args.url, args.output, args.quality, args.browser, args.time, args.subs)
++    audio_from_video = "video" in args.kinds and "audio" in args.kinds
++        for kind in args.kinds:
++            if kind == "audio" and audio_from_video:
++                continue
++            downloaded_path = download(args.url, args.output, kind, args.quality, args.browser, args.time, args.lang)
++            if kind == "video" and audio_from_video:
++                extract_audio(downloaded_path, args.output)
++    except subprocess.CalledProcessError as e:
++        ...
+#+end_src
+
+** CMD.org  [[file:~/REPOS/PROJECTS/VIDEO_DOWNLOAD/CMD.org][VIDEO_DOWNLOAD/CMD.org]]  :: 5
+#+begin_src diff
+--- a/CMD.org
++++ b/CMD.org
+@@ removed @@
+-* DOWNLOAD
+-* DOWNLOAD_AUDIO
+-* DOWNLOAD_RANGE
+-* DOWNLOAD_SUBS
+-...
+@@ Download with options @@
++* Download with options
++#+DESC: download.py with no URL argument and -o OUTPUT
++#+NAME: download_with_options
++...
++python3 download.py -o OUTPUT
+@@ Update yt_dlp library @@
+-* UPDATE_YT_DLP
++* Update yt_dlp library
+-#+NEXT: run the download block again
++#+NEXT: run the Download with options block again
+-#+NAME: update_yt_dlp
++#+NAME: update_yt_dlp_library
+#+end_src
+
+* SCOPE
+  - read :: =VIDEO_DOWNLOAD/=
+  - write :: =download.py= =CMD.org= =tests/= =.claude/PLANS/=
+  - forbidden :: =.theme/= =OUTPUT/= =.gitignore= =README.org=
+
+* PROTOTYPE
+** DONE PROTO_1 end to end [2/2]
+   - [X] download.py
+   - [X] CMD.org
+   - [[elisp:(let ((default-directory (expand-file-name "~/REPOS/PROJECTS/VIDEO_DOWNLOAD/"))) (magit-show-commit "e978551"))][VIDEO_DOWNLOAD e978551]] :: DownloadOptions: add kind and quality and lang options and prompts to download.py
+
+* TESTS [8/8]
+** DONE TEST_1 download()  :: 1 2 3
+   - test file :: [[file:~/REPOS/PROJECTS/VIDEO_DOWNLOAD/tests/test_download.py][VIDEO_DOWNLOAD/tests/test_download.py]]
+#+begin_src diff
+--- /dev/null
++++ b/tests/test_download.py
+@@ TestDownload @@
++class TestDownload(unittest.TestCase):
++    def test_audio_kind_adds_mp3_postprocessor(self) -> None:
++        ...
++    def test_subtitle_kind_uses_lang(self) -> None:
++        ...
++    def test_video_quality_selects_height(self) -> None:
++        ...
++    def test_returns_requested_download_filepath(self) -> None:
++        ...
+#+end_src
+   - [X] body commented out and test shown failing
+   - [X] body restored and test shown passing
+
+** DONE TEST_2 parse_arguments()  :: 1 2 3 4
+   - test file :: [[file:~/REPOS/PROJECTS/VIDEO_DOWNLOAD/tests/test_download.py][VIDEO_DOWNLOAD/tests/test_download.py]]
+#+begin_src diff
+--- a/tests/test_download.py
++++ b/tests/test_download.py
+@@ TestParseArguments @@
++class TestParseArguments(unittest.TestCase):
++    def test_flags_set_kinds_quality_lang(self) -> None:
++        ...
++    def test_kind_takes_several_values(self) -> None:
++        ...
++    def test_missing_url_is_none(self) -> None:
++        ...
+#+end_src
+   - [X] body commented out and test shown failing
+   - [X] body restored and test shown passing
+
+** DONE TEST_3 prompt_choice()  :: 4
+   - test file :: [[file:~/REPOS/PROJECTS/VIDEO_DOWNLOAD/tests/test_download.py][VIDEO_DOWNLOAD/tests/test_download.py]]
+#+begin_src diff
+--- a/tests/test_download.py
++++ b/tests/test_download.py
+@@ TestPromptChoice @@
++class TestPromptChoice(unittest.TestCase):
++    def test_empty_answer_returns_default(self) -> None:
++        ...
++    def test_invalid_answer_asks_again(self) -> None:
++        ...
+#+end_src
+   - [X] body commented out and test shown failing
+   - [X] body restored and test shown passing
+
+** DONE TEST_4 prompt_yes_no()  :: 4
+   - test file :: [[file:~/REPOS/PROJECTS/VIDEO_DOWNLOAD/tests/test_download.py][VIDEO_DOWNLOAD/tests/test_download.py]]
+#+begin_src diff
+--- a/tests/test_download.py
++++ b/tests/test_download.py
+@@ TestPromptYesNo @@
++class TestPromptYesNo(unittest.TestCase):
++    def test_empty_answer_returns_default(self) -> None:
++        ...
++    def test_invalid_answer_asks_again(self) -> None:
++        ...
+#+end_src
+   - [X] body commented out and test shown failing
+   - [X] body restored and test shown passing
+
+** DONE TEST_5 prompt_options()  :: 4
+   - test file :: [[file:~/REPOS/PROJECTS/VIDEO_DOWNLOAD/tests/test_download.py][VIDEO_DOWNLOAD/tests/test_download.py]]
+#+begin_src diff
+--- a/tests/test_download.py
++++ b/tests/test_download.py
+@@ TestPromptOptions @@
++class TestPromptOptions(unittest.TestCase):
++    def test_answers_fill_every_option(self) -> None:
++        ...
++    def test_three_no_answers_skip_other_prompts(self) -> None:
++        ...
+#+end_src
+   - [X] body commented out and test shown failing
+   - [X] body restored and test shown passing
+
+** DONE TEST_6 main()  :: 1 4
+   - test file :: [[file:~/REPOS/PROJECTS/VIDEO_DOWNLOAD/tests/test_download.py][VIDEO_DOWNLOAD/tests/test_download.py]]
+#+begin_src diff
+--- a/tests/test_download.py
++++ b/tests/test_download.py
+@@ TestMain @@
++class TestMain(unittest.TestCase):
++    def test_missing_url_calls_prompt_options(self) -> None:
++        ...
++    def test_each_kind_calls_download(self) -> None:
++        ...
++    def test_no_kinds_skips_download(self) -> None:
++        ...
++    def test_video_and_audio_download_once_then_extract(self) -> None:
++        ...
+#+end_src
+   - [X] body commented out and test shown failing
+   - [X] body restored and test shown passing
+
+** DONE TEST_7 extract_audio()  :: 1
+   - test file :: [[file:~/REPOS/PROJECTS/VIDEO_DOWNLOAD/tests/test_download.py][VIDEO_DOWNLOAD/tests/test_download.py]]
+#+begin_src diff
+--- a/tests/test_download.py
++++ b/tests/test_download.py
+@@ TestExtractAudio @@
++class TestExtractAudio(unittest.TestCase):
++    def test_writes_mp3_in_audio_dir(self) -> None:
++        ...
+#+end_src
+   - [X] body commented out and test shown failing
+   - [X] body restored and test shown passing
+
+** DONE TEST_8 check_cmd_org.py on CMD.org  :: 5
+   - test file :: [[file:~/.claude/skills/rd_cmd/check_cmd_org.py][rd_cmd/check_cmd_org.py]]
+   - [X] a block with =#+PLAIN:= removed and check shown failing
+   - [X] =#+PLAIN:= restored and check shown passing
+
+* REVISIONS
