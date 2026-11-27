@@ -5,7 +5,7 @@
 
 - [X] USER PLAN APPROVAL
 - [X] USER PROTOTYPE APPROVAL
-- [ ] USER MERGE APPROVAL
+- [X] USER MERGE APPROVAL
 
 * META
   :PROPERTIES:
@@ -14,7 +14,7 @@
   :BRANCH:        DownloadOptions_26-11-24
   :BASE_REV:      e8e94da
   :REPO:          ~/REPOS/PROJECTS/VIDEO_DOWNLOAD
-  :STATE:         IN_PROGRESS
+  :STATE: DONE
   :HAND_EDITS:    off
   :MODE:          full
   :EPIC:          none
@@ -151,6 +151,7 @@
    - [[elisp:(let ((default-directory (expand-file-name "~/REPOS/PROJECTS/VIDEO_DOWNLOAD/"))) (magit-show-commit "e978551"))][VIDEO_DOWNLOAD e978551]] :: DownloadOptions: add kind and quality and lang options and prompts to download.py
 
 * TESTS [8/8]
+  - [[elisp:(let ((default-directory (expand-file-name "~/REPOS/PROJECTS/VIDEO_DOWNLOAD/"))) (magit-show-commit "21c3023"))][VIDEO_DOWNLOAD 21c3023]] :: DownloadOptions: add tests/test_download.py for every changed download.py function
 ** DONE TEST_1 download()  :: 1 2 3
    - test file :: [[file:~/REPOS/PROJECTS/VIDEO_DOWNLOAD/tests/test_download.py][VIDEO_DOWNLOAD/tests/test_download.py]]
 #+begin_src diff

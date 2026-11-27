@@ -1,0 +1,36 @@
+#+TITLE: DownloadOptions Summary
+#+DATE: 26-11-27
+#+LINK: c elisp:(let ((default-directory (expand-file-name "~/REPOS/PROJECTS/VIDEO_DOWNLOAD/"))) (magit-show-commit "%s"))
+
+* INTENDED_RESULTS
+  1. =download.py= takes =--kind= with =video audio subtitle= :: [[c:e978551]] [[c:21c3023]]
+  2. =download.py= takes =--quality best|1080p|720p|480p= :: [[c:e978551]] [[c:21c3023]]
+  3. =download.py= takes =--lang= for the subtitle language :: [[c:e978551]] [[c:21c3023]]
+  4. =download.py= with no URL asks each option :: [[c:e978551]] [[c:21c3023]]
+  5. =CMD.org= has one download block that runs the prompts :: [[c:e978551]]
+
+* COMMITS
+  | commit      | what                                                             |
+  |-------------+------------------------------------------------------------------|
+  | [[c:733963d]] | add DownloadOptions_STORY.org plan                               |
+  | [[c:e978551]] | add kind and quality and lang options and prompts to download.py |
+  | [[c:21c3023]] | add tests/test_download.py for every changed download.py function |
+  | [[c:4e76979]] | merge DownloadOptions_26-11-24 into main                          |
+
+* USER_TESTS [0/2]
+  #+begin_src sh :results output
+    cd ~/REPOS/PROJECTS/VIDEO_DOWNLOAD
+    python3 -m unittest -q tests.test_download
+  #+end_src
+
+  #+RESULTS:
+
+  #+begin_src sh :results output
+    cd ~/REPOS/PROJECTS/VIDEO_DOWNLOAD
+    python3 download.py -o OUTPUT
+  #+end_src
+
+  #+RESULTS:
+
+  - [ ] =tests.test_download= reports OK for 18 tests
+  - [ ] =download.py= with no URL asks each option and writes to =OUTPUT/=
