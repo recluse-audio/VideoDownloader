@@ -148,9 +148,10 @@
 ** DONE PROTO_1 end to end [2/2]
    - [X] download.py
    - [X] CMD.org
+   - [[elisp:(let ((default-directory (expand-file-name "~/REPOS/PROJECTS/VIDEO_DOWNLOAD/"))) (magit-show-commit "e978551"))][VIDEO_DOWNLOAD e978551]] :: DownloadOptions: add kind and quality and lang options and prompts to download.py
 
-* TESTS [0/8]
-** TODO TEST_1 download()  :: 1 2 3
+* TESTS [8/8]
+** DONE TEST_1 download()  :: 1 2 3
    - test file :: [[file:~/REPOS/PROJECTS/VIDEO_DOWNLOAD/tests/test_download.py][VIDEO_DOWNLOAD/tests/test_download.py]]
 #+begin_src diff
 --- /dev/null
@@ -166,10 +167,10 @@
 +    def test_returns_requested_download_filepath(self) -> None:
 +        ...
 #+end_src
-   - [ ] body commented out and test shown failing
-   - [ ] body restored and test shown passing
+   - [X] body commented out and test shown failing
+   - [X] body restored and test shown passing
 
-** TODO TEST_2 parse_arguments()  :: 1 2 3 4
+** DONE TEST_2 parse_arguments()  :: 1 2 3 4
    - test file :: [[file:~/REPOS/PROJECTS/VIDEO_DOWNLOAD/tests/test_download.py][VIDEO_DOWNLOAD/tests/test_download.py]]
 #+begin_src diff
 --- a/tests/test_download.py
@@ -183,10 +184,10 @@
 +    def test_missing_url_is_none(self) -> None:
 +        ...
 #+end_src
-   - [ ] body commented out and test shown failing
-   - [ ] body restored and test shown passing
+   - [X] body commented out and test shown failing
+   - [X] body restored and test shown passing
 
-** TODO TEST_3 prompt_choice()  :: 4
+** DONE TEST_3 prompt_choice()  :: 4
    - test file :: [[file:~/REPOS/PROJECTS/VIDEO_DOWNLOAD/tests/test_download.py][VIDEO_DOWNLOAD/tests/test_download.py]]
 #+begin_src diff
 --- a/tests/test_download.py
@@ -198,10 +199,10 @@
 +    def test_invalid_answer_asks_again(self) -> None:
 +        ...
 #+end_src
-   - [ ] body commented out and test shown failing
-   - [ ] body restored and test shown passing
+   - [X] body commented out and test shown failing
+   - [X] body restored and test shown passing
 
-** TODO TEST_4 prompt_yes_no()  :: 4
+** DONE TEST_4 prompt_yes_no()  :: 4
    - test file :: [[file:~/REPOS/PROJECTS/VIDEO_DOWNLOAD/tests/test_download.py][VIDEO_DOWNLOAD/tests/test_download.py]]
 #+begin_src diff
 --- a/tests/test_download.py
@@ -213,10 +214,10 @@
 +    def test_invalid_answer_asks_again(self) -> None:
 +        ...
 #+end_src
-   - [ ] body commented out and test shown failing
-   - [ ] body restored and test shown passing
+   - [X] body commented out and test shown failing
+   - [X] body restored and test shown passing
 
-** TODO TEST_5 prompt_options()  :: 4
+** DONE TEST_5 prompt_options()  :: 4
    - test file :: [[file:~/REPOS/PROJECTS/VIDEO_DOWNLOAD/tests/test_download.py][VIDEO_DOWNLOAD/tests/test_download.py]]
 #+begin_src diff
 --- a/tests/test_download.py
@@ -228,10 +229,10 @@
 +    def test_three_no_answers_skip_other_prompts(self) -> None:
 +        ...
 #+end_src
-   - [ ] body commented out and test shown failing
-   - [ ] body restored and test shown passing
+   - [X] body commented out and test shown failing
+   - [X] body restored and test shown passing
 
-** TODO TEST_6 main()  :: 1 4
+** DONE TEST_6 main()  :: 1 4
    - test file :: [[file:~/REPOS/PROJECTS/VIDEO_DOWNLOAD/tests/test_download.py][VIDEO_DOWNLOAD/tests/test_download.py]]
 #+begin_src diff
 --- a/tests/test_download.py
@@ -247,10 +248,10 @@
 +    def test_video_and_audio_download_once_then_extract(self) -> None:
 +        ...
 #+end_src
-   - [ ] body commented out and test shown failing
-   - [ ] body restored and test shown passing
+   - [X] body commented out and test shown failing
+   - [X] body restored and test shown passing
 
-** TODO TEST_7 extract_audio()  :: 1
+** DONE TEST_7 extract_audio()  :: 1
    - test file :: [[file:~/REPOS/PROJECTS/VIDEO_DOWNLOAD/tests/test_download.py][VIDEO_DOWNLOAD/tests/test_download.py]]
 #+begin_src diff
 --- a/tests/test_download.py
@@ -260,12 +261,12 @@
 +    def test_writes_mp3_in_audio_dir(self) -> None:
 +        ...
 #+end_src
-   - [ ] body commented out and test shown failing
-   - [ ] body restored and test shown passing
+   - [X] body commented out and test shown failing
+   - [X] body restored and test shown passing
 
-** TODO TEST_8 check_cmd_org.py on CMD.org  :: 5
+** DONE TEST_8 check_cmd_org.py on CMD.org  :: 5
    - test file :: [[file:~/.claude/skills/rd_cmd/check_cmd_org.py][rd_cmd/check_cmd_org.py]]
-   - [ ] a block with =#+PLAIN:= removed and check shown failing
-   - [ ] =#+PLAIN:= restored and check shown passing
+   - [X] a block with =#+PLAIN:= removed and check shown failing
+   - [X] =#+PLAIN:= restored and check shown passing
 
 * REVISIONS
